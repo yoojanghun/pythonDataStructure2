@@ -43,3 +43,5 @@ if __name__ == "__main__":
         print("%d 위치에서 발견" % idx)
     else:
         print("키가 존재하지 않습니다.")
+
+# 시간 복잡도: O(n)
