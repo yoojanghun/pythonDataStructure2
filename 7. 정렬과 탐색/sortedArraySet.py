@@ -32,6 +32,50 @@ class SortedArraySet:
                 break
             self.array[i-1], self.array[i] = self.array[i], self.array[i-1]
 
+    def delete(self, e):
+        if not self.contains(e):
+            return
+
+        i = 0
+        while self.array[i] < e:
+            i += 1
+
+        self.size -= 1
+
+        while i < self.size:
+            self.array[i] = self.array[i+1]
+            i += 1
+
+    def union(self, setB):
+        setC = SortedArraySet()
+        i = 0       # 집합A 순회
+        j = 0       # 집합B 순회
+
+        while i < self.size and j < setB.size:
+            a = self.array[i]
+            b = setB.array[j]
+
+            if a == b:
+                setC.append(a)
+                i += 1
+                j += 1
+            elif a < b:
+                setC.append(a)
+                i += 1
+            else:
+                setC.append(b)
+                j += 1
+
+        while i < self.size:
+            setC.append(self.array[i])
+            i += 1
+
+        while j < setB.size:
+            setC.append(setB.array[j])
+            j += 1
+
+        return setC
+
 if __name__ == '__main__':
     import random
     setA = SortedArraySet()
