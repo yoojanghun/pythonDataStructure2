@@ -54,6 +54,33 @@ class BinaryTree:
             else:
                 return self.leafNodeCount(root.left) + self.leafNodeCount(root.right)
 
+    def getHeight(self, root):
+        if root == None:
+            return 0
+        else:
+            return 1 + max(self.getHeight(root.left), self.getHeight(root.right))
+
+    def treeReverse(self, root):
+        if root != None:
+            root.left, root.right = root.right, root.left
+
+            self.treeReverse(root.left)
+            self.treeReverse(root.right)
+
+    def levelOrder(self, root):
+        Q = queue.Queue()
+        Q.put(root)                 # 처음에 A를 집어넣음
+
+        while not Q.empty():
+            root = Q.get()
+            print("[%c] " % root.data, end="")
+
+            if root.left != None:
+                Q.put(root.left)
+
+            if root.right != None:
+                Q.put(root.right)
+
 if __name__ == "__main__":
     T = BinaryTree()
 
@@ -68,5 +95,14 @@ if __name__ == "__main__":
     print("In   : ", end="");   T.inOrder(N1);      print()
     print("Post : ", end="");   T.postOrder(N1);    print()
 
-    print(T.nodeCount(N1))              # 노드 수는 6개
-    print(T.leafNodeCount(N1))          # 리프 노드 수는 3개
+    print("Num of Nodes : %d" % T.nodeCount(N1))            # 노드 수는 6개
+    print("Num of Leaves : %d" % T.leafNodeCount(N1))       # 리프 노드 수는 3개
+    print("Tree Height : %d" % T.getHeight(N1))             # 높이는 3
+
+    T.treeReverse(N1)
+
+    print("Pre  : ", end="");   T.preOrder(N1);     print()
+    print("In   : ", end="");   T.inOrder(N1);      print()
+    print("Post : ", end="");   T.postOrder(N1);    print()
+
+    print("Level : ", end="");  T.levelOrder(N1);
