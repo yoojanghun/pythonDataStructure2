@@ -17,7 +17,8 @@ class HashTable:
         hashVal = self.hashFn(key)
 
         for i in range(M):
-            bucket = (hashVal + i) % M
+            # bucket = (hashVal + i) % M
+            bucket = (hashVal + i**2) % M       # 2차 조사법 (Quadratic proving)
 
             if self.table[bucket] == 0:
                 self.table[bucket] = key
@@ -27,7 +28,8 @@ class HashTable:
         hashVal = self.hashFn(key)
 
         for i in range(M):
-            bucket = (hashVal + i) % M
+            # bucket = (hashVal + i) % M
+            bucket = (hashVal + i ** 2) % M  # 2차 조사법 (Quadratic proving)
 
             if self.table[bucket] == 0:
                 return -1
@@ -38,14 +40,15 @@ class HashTable:
         hashVal = self.hashFn(key)
 
         for i in range(M):
-            bucket = (hashVal + i) % M
+            # bucket = (hashVal + i) % M
+            bucket = (hashVal + i ** 2) % M  # 2차 조사법 (Quadratic proving)
 
             if self.table[bucket] == 0:
                 print("No key to delete")
                 return
             elif self.table[bucket] == key:
                 print("Delete Key(%d) at bucket(%d). " % (key, bucket))
-                HT.table[bucket] = -1
+                self.table[bucket] = -1
                 return
 
 
