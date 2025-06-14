@@ -4,6 +4,10 @@
 # 빈 버킷을 두 가지로 분류
 # 한번도 사용하지 않은 것 => 0
 # 사용 되었다가 삭제되어 현재 비어있는 것 => -1
+
+# 버킷의 숫자는 소수
+# 선형 조사법, 이차 조사법, 이중 해싱법
+# 이중 해싱법: 충돌 발생시, 다른 해시 함수를 이용해 다음 위치 계산
 M = 13
 
 class HashTable:
@@ -13,12 +17,16 @@ class HashTable:
     def hashFn(self, key):
         return key % M
 
+    def hashFn2(self, key):
+        return 11 - (key % 11)
+
     def insert(self, key):
         hashVal = self.hashFn(key)
 
         for i in range(M):
             # bucket = (hashVal + i) % M
-            bucket = (hashVal + i**2) % M       # 2차 조사법 (Quadratic proving)
+            # bucket = (hashVal + i**2) % M       # 2차 조사법 (Quadratic proving)
+            bucket = (hashVal + i * self.hashFn2(key)) % M      # 이중 해싱법
 
             if self.table[bucket] == 0:
                 self.table[bucket] = key
@@ -29,7 +37,8 @@ class HashTable:
 
         for i in range(M):
             # bucket = (hashVal + i) % M
-            bucket = (hashVal + i ** 2) % M  # 2차 조사법 (Quadratic proving)
+            # bucket = (hashVal + i**2) % M       # 2차 조사법 (Quadratic proving)
+            bucket = (hashVal + i * self.hashFn2(key)) % M  # 이중 해싱법
 
             if self.table[bucket] == 0:
                 return -1
@@ -41,7 +50,8 @@ class HashTable:
 
         for i in range(M):
             # bucket = (hashVal + i) % M
-            bucket = (hashVal + i ** 2) % M  # 2차 조사법 (Quadratic proving)
+            # bucket = (hashVal + i**2) % M       # 2차 조사법 (Quadratic proving)
+            bucket = (hashVal + i * self.hashFn2(key)) % M  # 이중 해싱법
 
             if self.table[bucket] == 0:
                 print("No key to delete")
