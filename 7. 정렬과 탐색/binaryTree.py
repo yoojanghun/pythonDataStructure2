@@ -3,6 +3,8 @@
 # 전위 순회(preOrder traversal): 루트 노드 - 왼쪽 아래 - 오른쪽 아래 순서로 순회
 # 중위 순회(inOrder traversal): 왼쪽 아래 - 루트 노드 - 오른쪽 아래 순서로 순회
 # 후위 순회(postOrder traversal): 왼쪽 아래 - 오른쪽 아래 - 루트 노드 순서로 순회
+
+# 리프 노드(leaf Node): 자식 노드가 없는 노드
 import queue
 
 class Node:
@@ -33,6 +35,25 @@ class BinaryTree:
             self.postOrder(root.right)
             print("[%c] " % root.data, end="")
 
+    def nodeCount(self, root):
+        if root == None:
+            return 0
+        else:
+            return 1 + self.nodeCount(root.left) + self.nodeCount(root.right)
+
+    # 자식 노드가 없는 노드인가
+    def isExternal(self, root):
+        return root.left == None and root.right == None
+
+    def leafNodeCount(self, root):
+        if root == None:
+            return 0
+        else:
+            if self.isExternal(root):
+                return 1
+            else:
+                return self.leafNodeCount(root.left) + self.leafNodeCount(root.right)
+
 if __name__ == "__main__":
     T = BinaryTree()
 
@@ -46,3 +67,6 @@ if __name__ == "__main__":
     print("Pre  : ", end="");   T.preOrder(N1);     print()
     print("In   : ", end="");   T.inOrder(N1);      print()
     print("Post : ", end="");   T.postOrder(N1);    print()
+
+    print(T.nodeCount(N1))              # 노드 수는 6개
+    print(T.leafNodeCount(N1))          # 리프 노드 수는 3개
